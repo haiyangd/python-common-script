@@ -43,3 +43,7 @@
 ###6. get_rpms.py
 	
 		get and parse html from a url, then, to download all the RPMs listed in the html context
+		
+###7. socket_server.py  socket_client.py
+	
+		
