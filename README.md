@@ -28,4 +28,9 @@
 	
 		默认开启4个进程，需要将hosts.txt IP列表文件放入同一目录下，IP列表每行一个，支持域名、IP
 
+###3. nopswd_con.sh  run nopaswd_con.sh to add remote ssh keys to server to nopasswd for next ssh
+	
+		sh nopswd_con.sh slcn06vmf0021.us.oracle.com root
+
+
 
