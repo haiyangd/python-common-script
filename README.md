@@ -35,5 +35,9 @@
 ###4. configure_systat.sh  
 	
 		make rsys_dmn could be managed by service.(service rsys_dmn start)
+		
+###4. configure_systat.sh  
+	
+		make rsys_dmn could be managed by service.(service rsys_dmn start)
 
 
