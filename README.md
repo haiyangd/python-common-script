@@ -36,8 +36,8 @@
 	
 		make rsys_dmn could be managed by service.(service rsys_dmn start)
 		
-###4. configure_systat.sh  
+###5. rsys_dmn.sh
 	
-		make rsys_dmn could be managed by service.(service rsys_dmn start)
+		make r_systa script as daemon
 
 
