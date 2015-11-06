@@ -32,5 +32,8 @@
 	
 		sh nopswd_con.sh slcn06vmf0021.us.oracle.com root
 
+###4. configure_systat.sh  
+	
+		make rsys_dmn could be managed by service.(service rsys_dmn start)
 
 
