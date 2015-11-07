@@ -47,3 +47,7 @@
 ###7. socket_server.py  socket_client.py
 	
 		
+
+###8. network.py
+	
+		 a lib to valid the ip:port connection
