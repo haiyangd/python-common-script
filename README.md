@@ -68,6 +68,10 @@
 	
 		 Testing out reading and writing json to a file
 
-###12. cmdmain.py
+###13. cmdmain.py
 	
 		Example to show how module cmd is use
+
+###14. mynameis.py && mynameis2.py
+	
+		Example to show how command-line options can be handled by a script.
