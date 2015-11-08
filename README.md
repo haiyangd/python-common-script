@@ -55,3 +55,7 @@
 ###9. mult_thread_download.py && paxel.py
 	
 		 mult thread download a file to imporve download speed
+
+###9. args_kargs.py
+	
+		 just try to use *args and **kargs.
