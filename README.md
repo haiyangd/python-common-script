@@ -59,3 +59,7 @@
 ###10. args_kargs.py
 	
 		 just try to use *args and **kargs.
+
+###11. filter_map_reduce.py
+	
+		 讲述filter，map和reduce的用法
