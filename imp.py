@@ -1,3 +1,18 @@
+ 动态加载模块有三种方法
+1，使用系统函数__import_()
+stringmodule = __import__('string')
+
+2,使用imp 模块
+import imp 
+stringmodule = imp.load_module('string',*imp.find_module('string'))
+
+3,使用exec
+import_string = "import string as stringmodule"
+exec import_string
+
+ 
+ 
+ 
  def _run_upgrade(self):
         self._logger.info("hooks: %s" % self._options.skip_existing_hooks)
         self._python_lib = glob.glob("%s/rootfs/usr/lib/python*"
