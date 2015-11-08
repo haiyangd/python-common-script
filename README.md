@@ -67,3 +67,7 @@
 ###12. parse-json.py
 	
 		 Testing out reading and writing json to a file
+
+###12. cmdmain.py
+	
+		Example to show how module cmd is use
