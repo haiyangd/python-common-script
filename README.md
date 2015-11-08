@@ -79,3 +79,7 @@
 ###15. book_spider.py && spider.py
 	
 		 The heart of this program, finds all links within a web site.
+
+###16. imp.py
+	
+		 使用imp 模块动态加载别的模块
