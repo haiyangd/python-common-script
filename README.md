@@ -63,3 +63,7 @@
 ###11. filter_map_reduce.py
 	
 		 讲述filter，map和reduce的用法
+
+###12. parse-json.py
+	
+		 Testing out reading and writing json to a file
