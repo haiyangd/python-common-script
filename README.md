@@ -83,3 +83,7 @@
 ###16. imp.py
 	
 		 使用imp 模块动态加载别的模块
+
+###17. format_strings.py
+	
+		 format strings
