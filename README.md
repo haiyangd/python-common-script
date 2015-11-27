@@ -87,3 +87,7 @@
 ###17. format_strings.py
 	
 		 format strings
+
+###18. random_string.py 
+	
+		 使用 Python 如何生成 200 个激活码（或者优惠券)
