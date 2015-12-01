@@ -100,3 +100,8 @@
 	
 		 Get all files in designated pat
 		 Get the most popular word in designated files
+
+###21.    mail_config.py  mail_send_list.py mail_send_queue.py 
+	
+		 邮件模块
+
