@@ -105,6 +105,6 @@
 	
 		 邮件模块
 
-###22.   testmymodule.py 
+###22.   testmymodule.py logging_test_output_to_a_file.py
 	
 		unittest module
