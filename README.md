@@ -109,6 +109,6 @@
 	
 		unittest module
 
-###23.   testmymodule.py logging_test_output_to_a_file.py  profiling_and_timing_your_program.py
+###23.   logconfig.ini simple_logging_for_scripts_example1.py simple_logging_for_scripts_example2.py
 	
 		logging module
