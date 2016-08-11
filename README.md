@@ -112,3 +112,7 @@
 ###23.   logconfig.ini simple_logging_for_scripts_example1.py simple_logging_for_scripts_example2.py
 	
 		logging module
+		
+###24.    backup_1.py
+	
+		读取配置文件和对subprocess.Popen的重构
