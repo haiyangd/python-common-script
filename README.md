@@ -120,3 +120,7 @@
 ###24.    timethis.py
 	
 		确定程序的运行时间
+		
+###25.    host.py
+	
+		ssh linux host执行相关的操作
