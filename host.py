@@ -570,3 +570,46 @@ if __name__ == '__main__':
 #     kvm = KVMHost('10.249.97.20', ssh_port=36000, ssh_password=settings.QC_CHECK_HOST_PASSWD)
 #     kvm.vm_console('4ce00080-1f38-401d-b625-df9a17fa83ae')
  
+
+        
+        
+        
+        #################################################
+                ssh = bm.create_ssh_session(password, manage_ip)
+        shell_path = 'MemTotal_check.sh'
+        self.push_file(ssh, shell_path)
+        
+            def create_ssh_session(self, passwd, manage_ip=None, wan_ip=None, timeout=60, interval=10):
+        '''创建ssh会话，黑石通过管理IP、带外IP登录，但是无法获取，需要用户指定
+        '''
+        if manage_ip:
+            host, loc = manage_ip, settings.QC_API_LOCATION
+        else:
+            host, loc = wan_ip, None
+        
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            try:
+                return LinuxSSHSession(host,  ssh_password=passwd, location=loc)
+            except paramiko.SSHException, e:
+                if not e.args[0].startswith('Error reading SSH protocol banner'):
+                    raise
+                else:
+                    continue
+            except Socks5Error, e:
+                continue
+            else:
+                return
+        raise RuntimeError("%s秒内重试了%s次，SSHD %s:22不可访问" % (timeout, int(timeout/interval), host))
+        
+            def push_file(self, ssh, local_path, remote_path='/root'):
+        '''从本地上传文件至远程目录
+        
+        :params ssh: ssh客户端
+        :params local_path: 本地路径,路径相对于scripts的路径
+        :remote_path: 远程路径
+        '''
+        scripts_path = os.path.join(os.path.dirname(__file__), '../../scripts/')
+        real_shell_path = os.path.realpath(os.path.join(scripts_path, local_path))
+        shell_name = os.path.basename(real_shell_path)
+        ssh.push_file(real_shell_path, '%s/%s'%(remote_path, shell_name))
