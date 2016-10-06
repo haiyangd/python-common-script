@@ -133,3 +133,10 @@
     
     DataCapacity(12) == DataCapacity("12B")
     DataCapacity("12 kB") == DataCapacity(12*1024)
+    
+###27.    util.py
+	1.wait_tcp_accessible  等待TCP网络端口可以访问
+	2. wait_sshd_ready  等待SSH服务准备就绪
+	
+    
+
