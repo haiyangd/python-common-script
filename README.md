@@ -124,3 +124,12 @@
 ###25.    host.py
 	
 		ssh linux host执行相关的操作
+		
+###26.    DataCapacity.py
+	
+		数据量
+    
+    用户辅助各种数据量的转换和对比，例如::
+    
+    DataCapacity(12) == DataCapacity("12B")
+    DataCapacity("12 kB") == DataCapacity(12*1024)
