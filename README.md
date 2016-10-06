@@ -137,6 +137,23 @@
 ###27.    util.py
 	1.wait_tcp_accessible  等待TCP网络端口可以访问
 	2. wait_sshd_ready  等待SSH服务准备就绪
-	
-    
+	   
+###28.    database.py 
+数据库使用支持
 
+使用示例：
+
+db = Database( 'localhost', 3306, 'root', '6611750', 'eeelin')
+results = db.table('tttt').select().where(Field('sss')!='90')
+print results[1]
+print len(results)
+for it in results:
+    print it.id, it
+
+results = db.table('tttt').select('sss').where(Field('sss')=='XXX')
+for it in results:
+    print it
+
+results = db.table('tttt').select('sss')
+for it in results:
+    print it
