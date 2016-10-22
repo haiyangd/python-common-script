@@ -174,3 +174,8 @@
     * do not resend emails for repeated failures
     * more complex tests (e.g. regex)
     * machine-learning for automatic random website checks
+
+
+###30.    log_parser.py 
+     
+     实时监控log 日志，类似tail -f log,搜索到指定的关键字并打印
