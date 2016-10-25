@@ -179,3 +179,12 @@
 ###30.    log_parser.py 
      
      实时监控log 日志，类似tail -f log,搜索到指定的关键字并打印
+     
+###31.    folder_size.py
+     This will scan the current directory and all subdirectories and display the size.
+     [root@VM_28_85_centos python]# python folder_size.py 
+     Folder Size: 0.15 Gigabytes
+     Folder Size: 159085.67 Kilobytes
+     Folder Size: 162903729.0 Bytes
+     Folder Size: 155.36 Megabytes
+
