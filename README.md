@@ -198,3 +198,5 @@
      generate random MAC address
 ###35.    rpmdb.py
      rpm db check and rpm db rebuild
+###36.    download_repos.py
+     download rpm Packages from repos url
