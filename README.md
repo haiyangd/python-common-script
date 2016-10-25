@@ -196,3 +196,5 @@
      cleanup pid file and kill process
 ###34.    randomMAC.py
      generate random MAC address
+###35.    rpmdb.py
+     rpm db check and rpm db rebuild
