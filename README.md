@@ -207,4 +207,6 @@
 ###39.   Python one-liner to compare two files 
      python -c "print open('f0.txt', 'rb').read() == open('f1.txt', 'rb').read()"
 ###40.   sshcmd.py
-     ssh login linux host with python module
+     ssh login linux host with python module 
+###40.   sshConnect.py
+     ssh login linux host with python module pexpect
