@@ -206,3 +206,5 @@
      Get names and types of all attributes of a Python module
 ###39.   Python one-liner to compare two files 
      python -c "print open('f0.txt', 'rb').read() == open('f1.txt', 'rb').read()"
+###40.   sshcmd.py
+     ssh login linux host with python module
