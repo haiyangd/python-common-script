@@ -204,3 +204,5 @@
      通过调用json库把string类型转换为dict类型
 ###38.   mod_attrs_and_types.pyy
      Get names and types of all attributes of a Python module
+###39.   Python one-liner to compare two files 
+     python -c "print open('f0.txt', 'rb').read() == open('f1.txt', 'rb').read()"
