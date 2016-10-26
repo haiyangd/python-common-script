@@ -200,3 +200,5 @@
      rpm db check and rpm db rebuild
 ###36.    download_repos.py
      download rpm Packages from repos url
+###37.   string2dict.py
+     通过调用json库把string类型转换为dict类型
