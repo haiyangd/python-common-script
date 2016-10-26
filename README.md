@@ -202,3 +202,5 @@
      download rpm Packages from repos url
 ###37.   string2dict.py
      通过调用json库把string类型转换为dict类型
+###38.   mod_attrs_and_types.pyy
+     Get names and types of all attributes of a Python module
