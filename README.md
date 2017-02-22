@@ -213,3 +213,6 @@
      
 ###41.   difflib.py
      python  difflib.py nginx.conf.v1 nginx.conf.v2 > diff.html,对比nginx配置文件的差异，生成html格式的差异文档
+     
+###42.   filecmp_simple2.py
+     python filecmp_simple2.py dir1 dir2,校验源于备份目录差异，并把原目录不同的同步到目的目录
