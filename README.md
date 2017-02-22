@@ -219,3 +219,15 @@
  
 ###43.   pycurl_simple.py
      python pycurl_simple.py,实现探测web服务质量
+
+###44.   nmap_simple.py
+     python nmap_simple.py,实现高效的端口扫描，其中主机输入支持，如www.qq.com,192.168.1.*,192.168.1.1-20,192.168.1.0/24等，端口输入格式也是
+     非常灵活，如80，443,22-443
+     [root@VM_255_119_centos python-nmap-0.6.1]# python simple1.py 
+     Please input hosts and port: 115.159.240.14 80
+     ----------------------------------------------------
+     Host : 115.159.240.14 ()
+     State : up
+     ----------
+     Protocol : tcp
+     port : 80	  state : open
