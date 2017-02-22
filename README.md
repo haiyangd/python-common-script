@@ -217,5 +217,5 @@
 ###42.   filecmp_simple2.py
      python filecmp_simple2.py dir1 dir2,校验源于备份目录差异，并把原目录不同的同步到目的目录
  
- ###43.   pycurl_simple.py
+###43.   pycurl_simple.py
      python pycurl_simple.py,实现探测web服务质量
