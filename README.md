@@ -231,3 +231,6 @@
      ----------
      Protocol : tcp
      port : 80	  state : open
+
+###45.   pexpect_simple.py
+     python pexpect_simple.py，远程文件自动打包并下载
