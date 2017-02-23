@@ -239,3 +239,5 @@
      python pexpect_simple1.py，实现一个自动化ftp操作
 ###47.   paramiko_simple1.py
      python paramiko_simple1.py，实现远程ssh运行命令
+###48.   paramiko_simple2.py
+     python paramiko_simple2.py，实现密钥方式登录远程主机
