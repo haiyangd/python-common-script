@@ -241,3 +241,7 @@
      python paramiko_simple1.py，实现远程ssh运行命令
 ###48.   paramiko_simple2.py
      python paramiko_simple2.py，实现密钥方式登录远程主机
+###49.   paramiko_simple3.py
+     python paramiko_simple3.py，堡垒机模式下的远程命令执行
+###50.   paramiko_simple4.py
+     python paramiko_simple4.py，实现堡垒机模式下的远程文件上传
