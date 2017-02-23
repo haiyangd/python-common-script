@@ -234,3 +234,6 @@
 
 ###45.   pexpect_simple.py
      python pexpect_simple.py，远程文件自动打包并下载
+
+###46.   pexpect_simple1.py
+     python pexpect_simple1.py，实现一个自动化ftp操作
