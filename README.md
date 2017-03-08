@@ -247,3 +247,5 @@
      python paramiko_simple4.py，实现堡垒机模式下的远程文件上传
 ###51.   retry.sh
      支持设置重试次数，命令成功时的退出码，重试间隔时间
+###52.   crontab.sh
+     通过shell脚本添加删除crontab任务
