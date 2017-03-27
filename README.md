@@ -264,3 +264,6 @@
      
 ###56.   delmetafile.py 删除文件夹下面所有的.meta文件
      删除unity工程里的所有meta文件
+
+###57.   is_chinese.py 用python判读字符是否是中文 
+     用于检测字符串中的字符是否是中文，在调用函数前，必须先把字符串转成unicode编码
