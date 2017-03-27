@@ -181,6 +181,7 @@
      实时监控log 日志，类似tail -f log,搜索到指定的关键字并打印
      
 ###31.    folder_size.py
+
      This will scan the current directory and all subdirectories and display the size.
      [root@VM_28_85_centos python]# python folder_size.py 
      Folder Size: 0.15 Gigabytes
@@ -189,38 +190,53 @@
      Folder Size: 155.36 Megabytes
 
 ###31.    file_rename.py
+
      This will batch rename a group of files in a given directory
 ###32.    move_files_over_x_days.py
+
      This will move all the files from the src directory that are over 240 days old to the destination directory.
 ###33.    cleanup_pid.py
+
      cleanup pid file and kill process
 ###34.    randomMAC.py
+
      generate random MAC address
 ###35.    rpmdb.py
+
      rpm db check and rpm db rebuild
 ###36.    download_repos.py
+
      download rpm Packages from repos url
 ###37.   string2dict.py
+
      通过调用json库把string类型转换为dict类型
-###38.   mod_attrs_and_types.pyy
+###38.   mod_attrs_and_types.py
+
      Get names and types of all attributes of a Python module
 ###39.   Python one-liner to compare two files 
+
      python -c "print open('f0.txt', 'rb').read() == open('f1.txt', 'rb').read()"
 ###40.   sshcmd.py
+
      ssh login linux host with python module paramiko
 ###40.   sshConnect.py
+
      ssh login linux host with python module pexpect
      
 ###41.   difflib.py
+
      python  difflib.py nginx.conf.v1 nginx.conf.v2 > diff.html,对比nginx配置文件的差异，生成html格式的差异文档
      
 ###42.   filecmp_simple2.py
+
      python filecmp_simple2.py dir1 dir2,校验源于备份目录差异，并把原目录不同的同步到目的目录
  
 ###43.   pycurl_simple.py
+
      python pycurl_simple.py,实现探测web服务质量
 
 ###44.   nmap_simple.py
+
      python nmap_simple.py,实现高效的端口扫描，其中主机输入支持，如www.qq.com,192.168.1.*,192.168.1.1-20,192.168.1.0/24等，端口输入格式也是
      非常灵活，如80，443,22-443
      [root@VM_255_119_centos python-nmap-0.6.1]# python simple1.py 
@@ -233,23 +249,32 @@
      port : 80	  state : open
 
 ###45.   pexpect_simple.py
+
      python pexpect_simple.py，远程文件自动打包并下载
 
 ###46.   pexpect_simple1.py
+
      python pexpect_simple1.py，实现一个自动化ftp操作
 ###47.   paramiko_simple1.py
+
      python paramiko_simple1.py，实现远程ssh运行命令
 ###48.   paramiko_simple2.py
+
      python paramiko_simple2.py，实现密钥方式登录远程主机
 ###49.   paramiko_simple3.py
+
      python paramiko_simple3.py，堡垒机模式下的远程命令执行
 ###50.   paramiko_simple4.py
+
      python paramiko_simple4.py，实现堡垒机模式下的远程文件上传
 ###51.   retry.sh
+
      支持设置重试次数，命令成功时的退出码，重试间隔时间
 ###52.   crontab.sh
+
      通过shell脚本添加删除crontab任务
 ###53.   multithreading.sh
+
      可控多线程 shell 脚本
      说到可控多线程的 shell 脚本，很多人第一时间应该都会想到前人分享的管道方案吧（详见代码一），用过的都说不错。
      今天主要分享一个入门级、更容易理解的shell可控多线程方案：任务切割
@@ -257,13 +282,17 @@
      某日，接到了这个任务，需要对800多个IP进行一次Ping检测，只要取得ping可达的IP就好。
 
 ###54.   lockthread.sh
+
      shell 单例模式
      
 ###55.   camelCase2UnderScoreCase.py 下划线命名与驼峰命名风格转换
+
      背景： 业务逻辑中糅合了两种风格的变量命名，希望风格统一化，但由于涉及代码量较大，手工改易错漏， 因此利用正则写脚本来转。在尝试不同版本的实现中，      发现借助python实现十分简洁。
      
 ###56.   delmetafile.py 删除文件夹下面所有的.meta文件
+
      删除unity工程里的所有meta文件
 
 ###57.   is_chinese.py 用python判读字符是否是中文 
+
      用于检测字符串中的字符是否是中文，在调用函数前，必须先把字符串转成unicode编码
