@@ -296,3 +296,56 @@
 ###57.   is_chinese.py 用python判读字符是否是中文 
 
      用于检测字符串中的字符是否是中文，在调用函数前，必须先把字符串转成unicode编码
+
+###58.   进程监控/告警/拉取工具 
+
+1. 核心功能：
+- 监控编译/解释型进程的进程数、CPU使用率、内存， 以及是否有僵尸进程等信息；
+- 自动触发告警和执行进程拉取命令；
+- 定期收集进程的CPU、内存和进程状态信息， 方便跟踪进程运行情况；
+
+2. 监控实现：
+- 编译型进程通过匹配进程的exec file来实现， 配合PS命令来提取CPU、内存和进程状态信息；
+- 解释型进程通过匹配进程执行参数来实现， CPU等信息同样适用PS命令提取；
+
+3.告警实现：
+- 支持自定义告警， 参见ibg_alarm函数；
+- 支持网管告警， 参见tnm_alarm函数；
+
+4. 进程自动拉取：
+- 支持执行目录下的标识文件检测（手工停止会生成表示文件、Core down则不会）， 判断是否执行进程拉取；
+- 如果不存在标识文件则直接执行拉取命令；存在标识文件则只触发告警；（避免变更前还需要手工停止监控脚本）
+
+5. 日志记录：
+- 监控进程的运行数量， CPU、内存和进程状态信息， 方便追溯和问题查询；
+
+6. 配置文件说明：
+[default]
+log_level = debug
+；定义日志级别
+ibgalarm_api = http:///xxxxx
+；定义告警服务的API
+alarm_key = 1798
+；定义告警发送的key id
+
+[nginx]
+type = compile
+；定义进程类型为“编译型”
+binpath = /usr/sbin/nginx
+；定义进程的exec file
+number = 2
+；定义监控进程的数量
+command = /usr/bin/nginx
+；定义拉取进程的指令
+alarm_key=2048
+；为nginx定义独立的告警ID
+
+[net prober]
+type = interpret
+；定义进程类型为“解释型”
+keyword = python prober.py
+；定义检测进程是否存在的关键字(ps 过滤关键字)
+command = cd /opt/tools/; python prober.py
+；定义拉取进程的指令
+number = 10
+；定义存活进程的数量
