@@ -8,3 +8,11 @@ def randomMAC():
                 random.randint(0x00, 0xff) ]
         return ':'.join(map(lambda x: "%02x" % x, mac))
 print randomMAC()
+
+python生成随机密码或随机字符串
+
+import string,random 
+def makePassword(minlength=5,maxlength=25): 
+  length=random.randint(minlength,maxlength) 
+  letters=string.ascii_letters+string.digits # alphanumeric, upper and lowercase 
+  return ''.join([random.choice(letters) for _ in range(length)]) 
