@@ -285,3 +285,7 @@ function DoParallelSHWork()
 
 #test
 #DoParallelSHWork 2 "sleep 11" "echo haha" "sleep 13" 'cd /tmp && echo $PWD'
+
+一条命令找出端口冲突的进程 
+通过lsof找出端口冲突的进程
+lsof  -P -n -i |  perl -alne '$p{ "$F[-1]:$F[-2]"}->{$F[0]} += 1; END{ for $k (keys %p){ %v = %{$p{$k}}; printf("%s => %s\n", $k, join("\,\t", keys(%v))) if keys(%v) > 1}}'
