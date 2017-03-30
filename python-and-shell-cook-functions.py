@@ -92,3 +92,17 @@ function retry {
 
 # 重试三次，命令成功时的退出码为0，失败时sleep 10s
 retry 3 0 10 ping foo.bar
+      
+Shell 实现多任务并发 
+场景：
+需要控制并发进程数
+
+优点：
+用xargs命令实现，简单方便。
+
+说明：
+xargs -P参数，同时运行的最大进程数
+for ((i = 0; i < 20; i++))
+do
+        echo "./a.out $i"
+done | xargs -0 -I'{}' -n1 -P4 sh -c '{}'
