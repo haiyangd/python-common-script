@@ -208,4 +208,80 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 line="$dir/start.sh"
 # 从crontab列表删除指定任务项
 (crontab -u $user -l | grep -v "$line") | crontab -u $user -      
+ 
+简单的多SH命令并发控制 
+适用于有多个SH命令可以并行执行，同时又希望并发数控制的情况。
+
+优点：使用简单，可以达到并行执行的效果，且并行度可控。
+缺点：使用FIFO实现，代码中绑定了文件描述符6，存在文件描述符冲突的可能。
       
+function DoParallelSHWork()
+{
+
+    function DoParallelSHWorkUsage()
+    {
+        #打印DoParallelSHWork使用帮助
+        echo $1
+        echo 'Usage:   DoParallelSHWork ParallelNum Task1 Task2 Task3 ... TaskN'
+        echo 'Example: DoParallelSHWork 2 "sleep 10" "sleep 11" "echo haha" "sleep 3"'
+    }
+
+
+    #参数个数
+    ParameterCount=$#    
+    if [[ $ParameterCount -lt 2 ]]
+    then
+        DoParallelSHWorkUsage "ParameterCount less than 2"
+        return 1
+    fi
+    
+
+    #声明并行任务进程个数
+    ParallelNum=$1    
+    if [ "$1" -gt 0 ] 2>/dev/null
+    then 
+      :
+    else 
+      DoParallelSHWorkUsage "ParallelNum $ParallelNum is not a number"
+      return 1
+    fi
+    
+    
+    
+    #使用FIFO来做并行控制
+    #使用进场号，在tmp目录下创建FIFO   
+    tmp_fifofile="/tmp/$$.fifo"
+    #echo "mkfifo: $tmp_fifofile"
+    mkfifo $tmp_fifofile
+    #将对应的FIFO文件绑定为文件描述符6
+    exec 6<>$tmp_fifofile
+    #至此，已经可以删除FIFO文件，但其实对于该进程，这个文件依然可读写
+    rm -f $tmp_fifofile
+    
+    #初始化FIFO的管道内容，写入ParallelNum个换行符   
+    for (( i = 0; i < $ParallelNum; i++ ))
+    do
+        echo
+    done >&6
+    
+    
+    shift #去掉并发数，剩下的就是具体的任务了
+    while [[ -n "$1" ]]
+    do
+        read -u6
+        {
+            echo `date +"%Y-%m-%d %H:%M:%S"` running $1
+            (eval "$1") #子shell中执行
+            echo >&6
+            echo `date +"%Y-%m-%d %H:%M:%S"` done $1
+        } &
+        
+        shift #下一个任务
+    done
+    
+    wait #等待任务完成，完成不代表没有执行错误，后续需要进一步检查任务运行的实际结果
+    return 0
+}
+
+#test
+#DoParallelSHWork 2 "sleep 11" "echo haha" "sleep 13" 'cd /tmp && echo $PWD'
