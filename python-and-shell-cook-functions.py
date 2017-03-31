@@ -354,3 +354,10 @@ else
         echo ${BASH_REMATCH[1]}
     fi
 fi
+
+使用sort 和 uniq 做集合运算 
+# a 并 b
+cat a b | sort | uniq 
+
+# a 交 b
+cat a b | sort | uniq -d
