@@ -787,3 +787,63 @@ except socket.gaierror:
 print SUCESS+"+-------------------------+"
 print SUCESS+"| DNS   : " +ip+ "     |"
 print SUCESS+"+-------------------------+"
+
+###############################################################
+md5sum.py
+#!/usr/bin/python
+#encoding=utf-8
+import io
+import sys
+import hashlib
+import string
+
+def printUsage():
+	print ('''Usage: [python] pymd5sum.py <filename>''')
+	
+def main():
+	if(sys.argv.__len__()==2):
+		#print(sys.argv[1])
+
+		m = hashlib.md5()
+		file = io.FileIO(sys.argv[1],'r')
+		bytes = file.read(1024)
+		while(bytes != b''):
+			m.update(bytes)
+			bytes = file.read(1024) 
+		file.close()
+		
+		#md5value = ""
+		md5value = m.hexdigest()
+		print(md5value+"\t"+sys.argv[1])
+		
+		#dest = io.FileIO(sys.argv[1]+".CHECKSUM.md5",'w')
+		#dest.write(md5value)
+		#dest.close()
+	
+	else:
+		printUsage() 
+main()
+################################################
+muti-site.ini
+[site]
+url = http://www.361way.com/ 
+username = 361way
+password = nothing
+
+[site2]
+url = http://www.91it.org/ 
+username = 91it
+password = org
+
+musite.py
+from ConfigParser import SafeConfigParser
+
+parser = SafeConfigParser()
+parser.read('multisection.ini')
+
+for section_name in parser.sections():
+    print 'Section:', section_name
+    print '  Options:', parser.options(section_name)
+    for name, value in parser.items(section_name):
+        print '  %s = %s' % (name, value)
+print
