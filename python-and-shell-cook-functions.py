@@ -1211,3 +1211,170 @@ lower, upper = get_ip_local_port_range()
 print lower
 print upper
 set_ip_local_port_range(lower, upper)
+
+#########################################
+[root@VM_132_108_centos python]# python tmp.py 
+X-Lite3.0: [#############################100%#################################] 
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+
+"""
+Basic text progress bar without fancy curses features
+"""
+
+
+__all__ = ['ProgressBar']
+
+
+class ProgressBar:
+    '''
+    Displays interactively the progress of a given task
+    Inspired/adapted from code.activestate.com recipe #168639
+    '''
+
+    DEFAULT_WIDTH = 77
+
+    def __init__(self, minimum=0, maximum=100, width=DEFAULT_WIDTH, title=''):
+        '''
+        Initializes a new progress bar
+        @type mininum: integer
+        @param mininum: mininum (initial) value on the progress bar
+        @type maximum: integer
+        @param maximum: maximum (final) value on the progress bar
+        @type width: integer
+        @param with: number of columns, that is screen width
+        '''
+        assert maximum > minimum
+
+        self.minimum = minimum
+        self.maximum = maximum
+        self.range = maximum - minimum
+        self.width = width
+        self.title = title
+
+        self.current_amount = minimum
+        self.update(minimum)
+
+
+    def increment(self, increment, update_screen=True):
+        '''
+        Increments the current amount value
+        '''
+        self.update(self.current_amount + increment, update_screen)
+
+
+    def update(self, amount, update_screen=True):
+        '''
+        Performs sanity checks and update the current amount
+        '''
+        if amount < self.minimum: amount = self.minimum
+        if amount > self.maximum: amount = self.maximum
+        self.current_amount = amount
+
+        if update_screen:
+            self.update_screen()
+
+
+    def get_screen_text(self):
+        '''
+        Builds the actual progress bar text
+        '''
+        diff = float(self.current_amount - self.minimum)
+        done = (diff / float(self.range)) * 100.0
+        done = int(round(done))
+
+        all = self.width - 2
+        hashes = (done / 100.0) * all
+        hashes = int(round(hashes))
+
+        hashes_text = '#' * hashes
+        spaces_text = ' ' * (all - hashes)
+        screen_text = "[%s%s]" % (hashes_text, spaces_text)
+
+        percent_text = "%s%%" % done
+        percent_text_len = len(percent_text)
+        percent_position = (len(screen_text) / 2) - percent_text_len
+
+        screen_text = (screen_text[:percent_position] + percent_text +
+                       screen_text[percent_position + percent_text_len:])
+
+        if self.title:
+            screen_text = '%s: %s' % (self.title,
+                                      screen_text)
+        return screen_text
+
+
+    def update_screen(self):
+        '''
+        Prints the updated text to the screen
+        '''
+        print self.get_screen_text(), '\r',
+
+def display_data_size(size):
+    '''
+    Display data size in human readable units.
+    @type size: int
+    @param size: Data size, in Bytes.
+    @return: Human readable string with data size.
+    '''
+    prefixes = ['B', 'kB', 'MB', 'GB', 'TB']
+    i = 0
+    while size > 1000.0:
+        size /= 1000.0
+        i += 1
+    return '%.2f %s' % (size, prefixes[i])
+
+def interactive_download(url, output_file, title='', chunk_size=100*1024):
+    '''
+    Interactively downloads a given file url to a given output file
+    @type url: string
+    @param url: URL for the file to be download
+    @type output_file: string
+    @param output_file: file name or absolute path on which to save the file to
+    @type title: string
+    @param title: optional title to go along the progress bar
+    @type chunk_size: integer
+    @param chunk_size: amount of data to read at a time
+    '''
+    output_dir = os.path.dirname(output_file)
+    output_file = open(output_file, 'w+b')
+    input_file = urllib2.urlopen(url)
+
+    try:
+        file_size = int(input_file.headers['Content-Length'])
+    except KeyError:
+        raise ValueError('Could not find file size in HTTP headers')
+
+    logging.info('Downloading %s, %s to %s', os.path.basename(url),
+                 display_data_size(file_size), output_dir)
+
+    # Calculate progrss bar size based on title size
+    if title:
+        width = ProgressBar.DEFAULT_WIDTH - len(title)
+        progress_bar = ProgressBar(maximum=file_size,
+                                               width=width, title=title)
+    else:
+        progress_bar = ProgressBar(maximum=file_size)
+
+    # Download the file, while interactively updating the progress
+    progress_bar.update_screen()
+    while True:
+        data = input_file.read(chunk_size)
+        if data:
+            progress_bar.increment(len(data))
+            output_file.write(data)
+        else:
+            progress_bar.update(file_size)
+            print
+            break
+
+    output_file.close()
+interactive_download('http://123.207.166.197/tgw/tools/X-Lite3.0.rar', 'X-Lite3.0.rar', title='X-Lite3.0')
+				     
