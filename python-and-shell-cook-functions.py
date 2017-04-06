@@ -1148,4 +1148,32 @@ def Tail2(file, num_lines= 10):
     sys.stdout.write(item)
 
 if __name__ == '__main__':
-Tail2(sys.argv[1])					     
+Tail2(sys.argv[1])					  
+
+#######################################
+format_ip_with_mask					     
+[root@VM_132_108_centos python]# python tmp.py 
+111.111.0.0/16					     
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+def ip_to_long(ip):
+    # !L is a long in network byte order
+    return struct.unpack('!L', socket.inet_aton(ip))[0]
+
+
+def long_to_ip(number):
+    # See above comment.
+    return socket.inet_ntoa(struct.pack('!L', number))
+
+
+def create_subnet_mask(bits):
+    return (1 << 32) - (1 << 32-bits)
+
+
+def format_ip_with_mask(ip, mask_bits):
+    masked_ip = ip_to_long(ip) & create_subnet_mask(mask_bits)
+    return "%s/%s" % (long_to_ip(masked_ip), mask_bits)
+
+result = format_ip_with_mask('111.111.111.111', 16)
+print result
