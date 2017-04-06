@@ -1177,3 +1177,37 @@ def format_ip_with_mask(ip, mask_bits):
 
 result = format_ip_with_mask('111.111.111.111', 16)
 print result
+					     
+################################################
+[root@VM_132_108_centos python]# python tmp.py 
+32768
+61000
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+def get_ip_local_port_range():
+    match = re.match(r'\s*(\d+)\s*(\d+)\s*$',
+                     read_one_line('/proc/sys/net/ipv4/ip_local_port_range'))
+    return (int(match.group(1)), int(match.group(2)))
+
+
+def set_ip_local_port_range(lower, upper):
+    write_one_line('/proc/sys/net/ipv4/ip_local_port_range','%d %d\n' % (lower, upper))
+
+def read_one_line(filename):
+    return open(filename, 'r').readline().rstrip('\n')
+
+def write_one_line(filename, line):
+    open_write_close(filename, line.rstrip('\n') + '\n')
+
+
+def open_write_close(filename, data):
+    f = open(filename, 'w')
+    try:
+        f.write(data)
+    finally:
+        f.close()
+lower, upper = get_ip_local_port_range()
+print lower
+print upper
+set_ip_local_port_range(lower, upper)
