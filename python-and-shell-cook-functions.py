@@ -1598,3 +1598,85 @@ def get_file(src, dest, permissions=None):
         os.chmod(dest, permissions)
     return dest
 get_file('http://123.207.166.197/tgw/tools/X-Lite3.0.rar', '/data/haiyang/python/X-Lite3.0.rar', 777)
+####################################
+[root@VM_132_108_centos python]# python tmp1.py 
+[root@VM_132_108_centos python]# cat tmp1.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+
+
+
+def is_url(path):
+    """Return true if path looks like a URL"""
+    # for now, just handle http and ftp
+    url_parts = urlparse.urlparse(path)
+    return (url_parts[0] in ('http', 'ftp'))
+
+
+def urlopen(url, data=None, timeout=5):
+    """Wrapper to urllib2.urlopen with timeout addition."""
+
+    # Save old timeout
+    old_timeout = socket.getdefaulttimeout()
+    socket.setdefaulttimeout(timeout)
+    try:
+        return urllib2.urlopen(url, data=data)
+    finally:
+        socket.setdefaulttimeout(old_timeout)
+
+
+def urlretrieve(url, filename, data=None, timeout=300):
+    """Retrieve a file from given url."""
+    logging.debug('Fetching %s -> %s', url, filename)
+
+    src_file = urlopen(url, data=data, timeout=timeout)
+    try:
+        dest_file = open(filename, 'wb')
+        try:
+            shutil.copyfileobj(src_file, dest_file)
+        finally:
+            dest_file.close()
+    finally:
+        src_file.close()
+
+def get_file(src, dest, permissions=None):
+    """Get a file from src, which can be local or a remote URL"""
+    if src == dest:
+        return
+
+    if is_url(src):
+        urlretrieve(src, dest)
+    else:
+        shutil.copyfile(src, dest)
+
+    if permissions:
+        os.chmod(dest, permissions)
+    return dest
+#get_file('http://123.207.166.197/tgw/tools/X-Lite3.0.rar', '/data/haiyang/python/X-Lite3.0.rar', 777)
+
+def unmap_url(srcdir, src, destdir='.'):
+    """
+    Receives either a path to a local file or a URL.
+    returns either the path to the local file, or the fetched URL
+    unmap_url('/usr/src', 'foo.tar', '/tmp')
+                            = '/usr/src/foo.tar'
+    unmap_url('/usr/src', 'http://site/file', '/tmp')
+                            = '/tmp/file'
+                            (after retrieving it)
+    """
+    if is_url(src):
+        url_parts = urlparse.urlparse(src)
+        filename = os.path.basename(url_parts[2])
+        dest = os.path.join(destdir, filename)
+        return get_file(src, dest)
+    else:
+        return os.path.join(srcdir, src)
+
+unmap_url('/usr/src', 'http://123.207.166.197/tgw/tools/X-Lite3.0.rar', '/tmp')
