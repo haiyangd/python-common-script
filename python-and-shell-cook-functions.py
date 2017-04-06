@@ -1486,3 +1486,53 @@ def args_to_dict(args):
     return dict
 args = ['a:1','b=2']
 print args_to_dict(args)
+
+#############################################
+[root@VM_132_108_centos python]# python tmp.py 
+0
+-1
+1
+
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+
+def compare_versions(ver1, ver2):
+    """Version number comparison between ver1 and ver2 strings.
+    >>> compare_tuple("1", "2")
+    -1
+    >>> compare_tuple("foo-1.1", "foo-1.2")
+    -1
+    >>> compare_tuple("1.2", "1.2a")
+    -1
+    >>> compare_tuple("1.2b", "1.2a")
+    1
+    >>> compare_tuple("1.3.5.3a", "1.3.5.3b")
+    -1
+    Args:
+        ver1: version string
+        ver2: version string
+    Returns:
+        int:  1 if ver1 >  ver2
+              0 if ver1 == ver2
+             -1 if ver1 <  ver2
+    """
+    ax = re.split('[.-]', ver1)
+    ay = re.split('[.-]', ver2)
+    while len(ax) > 0 and len(ay) > 0:
+        cx = ax.pop(0)
+        cy = ay.pop(0)
+        maxlen = max(len(cx), len(cy))
+        c = cmp(cx.zfill(maxlen), cy.zfill(maxlen))
+        if c != 0:
+            return c
+    return cmp(len(ax), len(ay))
+print compare_versions('tgw-2.4.0.tlinux.1.0.8.m.l3-170328.x86_64', 'tgw-2.4.0.tlinux.1.0.8.m.l3-170328.x86_64')
+print compare_versions('tgw-2.4.0.tlinux.1.0.8.m.l3-170328.x86_64', 'tgw-2.4.0.tlinux.1.0.8.m.l3-170329.x86_64')
+print compare_versions('tgw-2.4.0.tlinux.1.0.8.m.l3-170328.x86_64', 'tgw-2.4.0.tlinux.1.0.8.m.l3-170327.x86_64')
