@@ -1451,3 +1451,38 @@ def get_unused_port():
             return port
 
 print get_unused_port()
+
+#######################################
+[root@VM_132_108_centos python]# python tmp.py 
+{'a': '1', 'b': '2'}
+[root@VM_132_108_centos python]# vim tmp.py 
+
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+
+def args_to_dict(args):
+    """Convert autoserv extra arguments in the form of key=val or key:val to a
+    dictionary.  Each argument key is converted to lowercase dictionary key.
+    Args:
+        args - list of autoserv extra arguments.
+    Returns:
+        dictionary
+    """
+    arg_re = re.compile(r'(\w+)[:=](.*)$')
+    dict = {}
+    for arg in args:
+        match = arg_re.match(arg)
+        if match:
+            dict[match.group(1).lower()] = match.group(2)
+        else:
+            logging.warning("args_to_dict: argument '%s' doesn't match "
+                            "'%s' pattern. Ignored." % (arg, arg_re.pattern))
+    return dict
+args = ['a:1','b=2']
+print args_to_dict(args)
