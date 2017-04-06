@@ -1406,3 +1406,48 @@ def ask(question, auto=False):
     return raw_input("%s INFO | %s (y/n) " %
 (time.strftime("%H:%M:%S", time.localtime()), question))
 print ask('are you ok?')
+
+######################################################
+[root@VM_132_108_centos python]# python tmp.py 
+60213
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+
+def get_unused_port():
+    """
+    Finds a semi-random available port. A race condition is still
+    possible after the port number is returned, if another process
+    happens to bind it.
+    Returns:
+        A port number that is unused on both TCP and UDP.
+    """
+
+    def try_bind(port, socket_type, socket_proto):
+        s = socket.socket(socket.AF_INET, socket_type, socket_proto)
+        try:
+            try:
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                s.bind(('', port))
+                return s.getsockname()[1]
+            except socket.error:
+                return None
+        finally:
+            s.close()
+
+    # On the 2.6 kernel, calling try_bind() on UDP socket returns the
+    # same port over and over. So always try TCP first.
+    while True:
+        # Ask the OS for an unused port.
+        port = try_bind(0, socket.SOCK_STREAM, socket.IPPROTO_TCP)
+        # Check if this port is unused on the other protocol.
+        if port and try_bind(port, socket.SOCK_DGRAM, socket.IPPROTO_UDP):
+            return port
+
+print get_unused_port()
