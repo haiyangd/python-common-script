@@ -1378,3 +1378,31 @@ def interactive_download(url, output_file, title='', chunk_size=100*1024):
     output_file.close()
 interactive_download('http://123.207.166.197/tgw/tools/X-Lite3.0.rar', 'X-Lite3.0.rar', title='X-Lite3.0')
 				     
+###############################
+[root@VM_132_108_centos python]# python tmp.py 
+22:14:09 INFO | are you ok? (y/n) y
+y
+[root@VM_132_108_centos python]# python tmp.py 
+22:14:12 INFO | are you ok? (y/n) n
+n
+[root@VM_132_108_centos python]# cat tmp.py 
+import os, pickle, random, re, resource, select, shutil, signal, StringIO
+import socket, struct, subprocess, sys, time, textwrap, traceback, urlparse
+import warnings, smtplib, logging, urllib2
+from threading import Thread, Event, Lock
+try:
+    import hashlib
+except ImportError:
+    import md5, sha
+def ask(question, auto=False):
+    """
+    Raw input with a prompt that emulates logging.
+    @param question: Question to be asked
+    @param auto: Whether to return "y" instead of asking the question
+    """
+    if auto:
+        logging.info("%s (y/n) y" % question)
+        return "y"
+    return raw_input("%s INFO | %s (y/n) " %
+(time.strftime("%H:%M:%S", time.localtime()), question))
+print ask('are you ok?')
