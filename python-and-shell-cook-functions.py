@@ -1680,3 +1680,41 @@ def unmap_url(srcdir, src, destdir='.'):
         return os.path.join(srcdir, src)
 
 unmap_url('/usr/src', 'http://123.207.166.197/tgw/tools/X-Lite3.0.rar', '/tmp')
+##############################
+十六进制和八进制转化为十进制
+[root@VM_132_108_centos common_lib]# cat tmp.py 
+import logging, optparse, os, re, sys, string, struct
+
+
+def _str_to_num(n):
+    """
+    Convert a hex or octal string to a decimal number.
+    @param n: Hex or octal string to be converted.
+    @return: Resulting decimal number.
+    """
+    val = 0
+    col = long(1)
+    if n[:1] == 'x': n = '0' + n
+    if n[:2] == '0x':
+        # hex
+        n = string.lower(n[2:])
+        while len(n) > 0:
+            l = n[len(n) - 1]
+            val = val + string.hexdigits.index(l) * col
+            col = col * 16
+            n = n[:len(n)-1]
+    elif n[0] == '\\':
+        # octal
+        n = n[1:]
+        while len(n) > 0:
+            l = n[len(n) - 1]
+            if ord(l) < 48 or ord(l) > 57:
+                break
+            val = val + int(l) * col
+            col = col * 8
+            n = n[:len(n)-1]
+    else:
+        val = string.atol(n)
+    return val
+print _str_to_num(n='0x0a')
+print _str_to_num(n='\\21')
