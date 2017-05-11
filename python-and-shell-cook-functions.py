@@ -1745,3 +1745,26 @@ def commands(cmds):
         results.append(command(cmd))
     return results
 print commands(['ls','pwd'])
+#############################################################
+根据网络位数获取ip的网段
+import socket
+import struct
+def ip_to_long(ip):
+    # !L is a long in network byte order
+    return struct.unpack('!L', socket.inet_aton(ip))[0]
+
+
+def long_to_ip(number):
+    # See above comment.
+    return socket.inet_ntoa(struct.pack('!L', number))
+
+
+def create_subnet_mask(bits):
+    return (1 << 32) - (1 << 32 - bits)
+
+
+def format_ip_with_mask(ip, mask_bits):
+    masked_ip = ip_to_long(ip) & create_subnet_mask(mask_bits)
+    return "%s/%s" % (long_to_ip(masked_ip), mask_bits)
+
+print format_ip_with_mask('192.168.1.1', 24)
