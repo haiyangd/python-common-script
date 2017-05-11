@@ -1768,3 +1768,62 @@ def format_ip_with_mask(ip, mask_bits):
     return "%s/%s" % (long_to_ip(masked_ip), mask_bits)
 
 print format_ip_with_mask('192.168.1.1', 24)
+#############################################################
+读取文件的key vlaue值和把字典的key value值写到文件中去
+[root@VM_255_119_centos hadong_python]# cat keyval
+a=1
+b="hadong"
+c=1.23
+[root@VM_255_119_centos hadong_python]# cat tmp.py 
+import re
+import os
+def read_keyval(path):
+    """
+    Read a key-value pair format file into a dictionary, and return it.
+    Takes either a filename or directory name as input. If it's a
+    directory name, we assume you want the file to be called keyval.
+    """
+    if os.path.isdir(path):
+        path = os.path.join(path, 'keyval')
+    keyval = {}
+    if os.path.exists(path):
+        for line in open(path):
+            line = re.sub('#.*', '', line).rstrip()
+            if not re.search(r'^[-\.\w]+=', line):
+                raise ValueError('Invalid format line: %s' % line)
+            key, value = line.split('=', 1)
+            if re.search('^\d+$', value):
+                value = int(value)
+            elif re.search('^(\d+\.)?\d+$', value):
+                value = float(value)
+            keyval[key] = value
+    return keyval
+print read_keyval('/data/haiyang/hadong_python')
+
+def write_keyval(path, dictionary):
+    """
+    Write a key-value pair format file out to a file. This uses append
+    mode to open the file, so existing text will not be overwritten or
+    reparsed.
+
+    If type_tag is None, then the key must be composed of alphanumeric
+    characters (or dashes+underscores). However, if type-tag is not
+    null then the keys must also have "{type_tag}" as a suffix. At
+    the moment the only valid values of type_tag are "attr" and "perf".
+
+    :param path: full path of the file to be written
+    :param dictionary: the items to write
+    :param type_tag: see text above
+    """
+    if os.path.isdir(path):
+        path = os.path.join(path, 'keyval')
+    keyval = open(path, 'a')
+
+    try:
+        for key in sorted(dictionary.keys()):
+            keyval.write('%s=%s\n' % (key, dictionary[key]))
+    finally:
+        keyval.close()
+
+dic_a = {'a': 1, 'c': 1.23, 'b': "hadong", 'd': 8}
+write_keyval('/data/haiyang/hadong_python', dic_a)
