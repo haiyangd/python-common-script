@@ -1881,3 +1881,28 @@ md5sum  mdadm   mdmon
 md5sum  mdadm   mdmon   
 [root@VM_255_119_centos hadong_python]# md5sum  keyval 
 76b7f1335d68de1b821a110d3142ae6a  keyval
+################################################
+True if process pid exists and is not yet stuck in Zombie state.
+[root@VM_255_119_centos python]# python tmp1.py 
+True
+[root@VM_255_119_centos python]# cat tmp1.py 
+def read_one_line(filename):
+    return open(filename, 'r').readline().rstrip('\n')
+def pid_is_alive(pid):
+    """
+    True if process pid exists and is not yet stuck in Zombie state.
+    Zombies are impossible to move between cgroups, etc.
+    pid can be integer, or text of integer.
+    """
+    path = '/proc/%s/stat' % pid
+
+    try:
+        stat = read_one_line(path)
+    except IOError:
+        if not os.path.exists(path):
+            # file went away
+            return False
+        raise
+
+    return stat.split()[2] != 'Z'
+print pid_is_alive(1)
