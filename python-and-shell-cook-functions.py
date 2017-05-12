@@ -1906,3 +1906,51 @@ def pid_is_alive(pid):
 
     return stat.split()[2] != 'Z'
 print pid_is_alive(1)
+########################################################
+  Sends a signal to a process id. Returns True if the process terminated
+  successfully, False otherwise.
+[root@VM_255_119_centos python]# cat tmp1.py 
+import os
+import signal
+import time
+def read_one_line(filename):
+    return open(filename, 'r').readline().rstrip('\n')
+def pid_is_alive(pid):
+    """
+    True if process pid exists and is not yet stuck in Zombie state.
+    Zombies are impossible to move between cgroups, etc.
+    pid can be integer, or text of integer.
+    """
+    path = '/proc/%s/stat' % pid
+
+    try:
+        stat = read_one_line(path)
+    except IOError:
+        if not os.path.exists(path):
+            # file went away
+            return False
+        raise
+
+    return stat.split()[2] != 'Z'
+
+def signal_pid(pid, sig):
+    """
+    Sends a signal to a process id. Returns True if the process terminated
+    successfully, False otherwise.
+    """
+    try:
+        os.kill(pid, sig)
+    except OSError:
+        # The process may have died before we could kill it.
+        pass
+
+    for i in range(5):
+        if not pid_is_alive(pid):
+            return True
+        time.sleep(1)
+
+    # The process is still alive
+    return False
+
+print pid_is_alive(1)
+print signal_pid(28386,signal.SIGKILL)
