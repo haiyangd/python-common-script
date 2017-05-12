@@ -1827,3 +1827,57 @@ def write_keyval(path, dictionary):
 
 dic_a = {'a': 1, 'c': 1.23, 'b': "hadong", 'd': 8}
 write_keyval('/data/haiyang/hadong_python', dic_a)
+##################################
+[root@VM_255_119_centos hadong_python]# vim tmp.py 
+
+try:
+    import hashlib
+except ImportError:
+    import md5
+    import sha
+def read_file(filename):
+    f = open(filename)
+    try:
+        return f.read()
+    finally:
+        f.close()
+def hash(type, input=None):
+    """
+    Returns an hash object of type md5 or sha1. This function is implemented in
+    order to encapsulate hash objects in a way that is compatible with python
+    2.4 and python 2.6 without warnings.
+
+    Note that even though python 2.6 hashlib supports hash types other than
+    md5 and sha1, we are artificially limiting the input values in order to
+    make the function to behave exactly the same among both python
+    implementations.
+
+    :param input: Optional input string that will be used to update the hash.
+    """
+    if type not in ['md5', 'sha1']:
+        raise ValueError("Unsupported hash type: %s" % type)
+
+    try:
+        hash = hashlib.new(type)
+    except NameError:
+        if type == 'md5':
+            hash = md5.new()
+        elif type == 'sha1':
+            hash = sha.new()
+
+    if input:
+        hash.update(input)
+
+    return hash
+a=read_file('/data/haiyang/hadong_python/keyval')
+print hash('md5', a).hexdigest()
+~
+"tmp.py" 41L, 1166C written
+[root@VM_255_119_centos hadong_python]# python tmp.py 
+76b7f1335d68de1b821a110d3142ae6a
+[root@VM_255_119_centos hadong_python]# md
+md5sum  mdadm   mdmon   
+[root@VM_255_119_centos hadong_python]# md
+md5sum  mdadm   mdmon   
+[root@VM_255_119_centos hadong_python]# md5sum  keyval 
+76b7f1335d68de1b821a110d3142ae6a  keyval
