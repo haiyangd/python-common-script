@@ -2850,3 +2850,41 @@ def find_substring(string, pattern1, pattern2=None):
         return None
     return ret[0]
 print find_substring('aabbccddee', 'abc')
+======================================================
+python 中给文件加锁——fcntl模块
+import fcntl
+
+打开一个文件
+f = open('./test') ##当前目录下test文件要先存在，如果不存在会报错。
+对该文件加密：
+fcntl.flock(f,fcntl.LOCK_EX)
+这样就对文件test加锁了，如果有其他进程对test文件加锁，则不能成功，会被阻塞，但不会退出程序。
+解锁：fcntl.flock(f,fcntl.LOCK_UN)
+
+fcntl模块：
+flock() : flock(f, operation)
+  operation : 包括：
+    fcntl.LOCK_UN 解锁
+    fcntl.LOCK_EX  排他锁
+fcntl.LOCK_SH  共享锁
+fcntl.LOCK_NB  非阻塞锁
+LOCK_SH 共享锁:所有进程没有写访问权限，即使是加锁进程也没有。所有进程有读访问权限。
+LOCK_EX 排他锁:除加锁进程外其他进程没有对已加锁文件读写访问权限。
+LOCK_NB 非阻塞锁:
+    如果指定此参数，函数不能获得文件锁就立即返回，否则，函数会等待获得文件锁。LOCK_NB可以同LOCK_SH或LOCK_NB进行按位或（|）运算操作。 fcnt.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
+[root@VM_255_119_centos python]# cat tmp11.py 
+import fcntl
+import time
+def lock_file(filename, mode=fcntl.LOCK_EX):
+    lockfile = open(filename, "w")
+    fcntl.lockf(lockfile, mode)
+    return lockfile
+
+
+def unlock_file(lockfile):
+    fcntl.lockf(lockfile, fcntl.LOCK_UN)
+    lockfile.close()
+a = lock_file('/data/haiyang/python/tmp12.py')
+print a.write('hahahah')
+time.sleep(120)
+print unlock_file(a)
