@@ -2801,3 +2801,22 @@ def archive_as_tarball(source_dir, dest_dir, tarball_name=None,
     tarball.add(os.path.basename(source_dir))
     tarball.close()
 print archive_as_tarball('/data/haiyang/presscall_long', '/tmp')
+===============================
+[root@VM_255_119_centos python]# vim tmp9.py
+
+def aton(sr):
+    """
+    Transform a string to a number(include float and int). If the string is
+    not in the form of number, just return false.
+
+    :param sr: string to transfrom
+    :return: float, int or False for failed transform
+    """
+    try:
+        return int(sr)
+    except ValueError:
+        try:
+            return float(sr)
+        except ValueError:
+            return False
+print aton('12345')
