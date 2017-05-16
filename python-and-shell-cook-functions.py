@@ -2969,3 +2969,37 @@ def pid_exists(pid):
     except Exception:
         return False
 print pid_exists(21)
+=============================================
+[root@VM_255_119_centos python]#  cat tmp15.py 
+import os
+import signal
+import commands
+def safe_kill(pid, signal):
+    """
+    Attempt to send a signal to a given process that may or may not exist.
+
+    :param signal: Signal number.
+    """
+    try:
+        os.kill(pid, signal)
+        return True
+    except Exception:
+        return False
+
+
+def kill_process_tree(pid, sig=signal.SIGKILL):
+    """Signal a process and all of its children.
+
+    If the process does not exist -- return.
+
+    :param pid: The pid of the process to signal.
+    :param sig: The signal to send to the processes.
+    """
+    if not safe_kill(pid, signal.SIGSTOP):
+        return
+    children = commands.getoutput("ps --ppid=%d -o pid=" % pid).split()
+    for child in children:
+        kill_process_tree(int(child), sig)
+    safe_kill(pid, sig)
+    safe_kill(pid, signal.SIGCONT)
+kill_process_tree(5739)
