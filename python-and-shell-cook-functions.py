@@ -2654,3 +2654,35 @@ def convert_data_size(size, default_sufix='B'):
 
     return int(float(size[0:-1]) * orders[order[0].upper()])
 print convert_data_size('1', default_sufix='K')
+============================================================================
+[root@VM_255_119_centos python]# vim tmp6.py 
+
+import string
+import random
+def generate_random_string(length, ignore_str=string.punctuation,
+                           convert_str=""):
+    """
+    Return a random string using alphanumeric characters.
+
+    :param length: Length of the string that will be generated.
+    :param ignore_str: Characters that will not include in generated string.
+    :param convert_str: Characters that need to be escaped (prepend "\\").
+
+    :return: The generated random string.
+    """
+    r = random.SystemRandom()
+    str = ""
+    chars = string.letters + string.digits + string.punctuation
+    if not ignore_str:
+        ignore_str = ""
+    for i in ignore_str:
+        chars = chars.replace(i, "")
+
+    while length > 0:
+        tmp = r.choice(chars)
+        if convert_str and (tmp in convert_str):
+            tmp = "\\%s" % tmp
+        str += tmp
+        length -= 1
+    return str
+print generate_random_string(15)
