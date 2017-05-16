@@ -2820,3 +2820,33 @@ def aton(sr):
         except ValueError:
             return False
 print aton('12345')
+========================================
+[root@VM_255_119_centos python]# python tmp10.py
+None
+[root@VM_255_119_centos python]# cat tmp10.py
+import re
+import logging
+def find_substring(string, pattern1, pattern2=None):
+    """
+    Return the match of pattern1 in string. Or return the match of pattern2
+    if pattern is not matched.
+
+    @string: string
+    @pattern1: first pattern want to match in string, must set.
+    @pattern2: second pattern, it will be used if pattern1 not match, optional.
+
+    Return: Match substing or None
+    """
+    if not pattern1:
+        logging.debug("pattern1: get empty string.")
+        return None
+    pattern = pattern1
+    if pattern2:
+        pattern += "|%s" % pattern2
+    ret = re.findall(pattern, string)
+    if not ret:
+        logging.debug("Could not find matched string with pattern: %s",
+                      pattern)
+        return None
+    return ret[0]
+print find_substring('aabbccddee', 'abc')
