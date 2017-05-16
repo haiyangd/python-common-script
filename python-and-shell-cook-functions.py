@@ -3072,3 +3072,53 @@ def find_free_ports(start_port, end_port, count, address="localhost"):
     return ports
 print find_free_port(0,65535,address="0.0.0.0")
 print find_free_ports(0,65535, 10, address="0.0.0.0")
+==========================================
+[root@VM_255_119_centos python]# python tmp17.py
+/tmp/hadong-20170516-161545-eTWU.txt
+[root@VM_255_119_centos python]# cat tmp17.py 
+import os
+import time
+import string
+import random
+def generate_random_string(length, ignore_str=string.punctuation,
+                           convert_str=""):
+    """
+    Return a random string using alphanumeric characters.
+
+    :param length: Length of the string that will be generated.
+    :param ignore_str: Characters that will not include in generated string.
+    :param convert_str: Characters that need to be escaped (prepend "\\").
+
+    :return: The generated random string.
+    """
+    r = random.SystemRandom()
+    str = ""
+    chars = string.letters + string.digits + string.punctuation
+    if not ignore_str:
+        ignore_str = ""
+    for i in ignore_str:
+        chars = chars.replace(i, "")
+
+    while length > 0:
+        tmp = r.choice(chars)
+        if convert_str and (tmp in convert_str):
+            tmp = "\\%s" % tmp
+        str += tmp
+        length -= 1
+    return str
+
+def generate_tmp_file_name(file_name, ext=None, directory='/tmp/'):
+    """
+    Returns a temporary file name. The file is not created.
+    """
+    while True:
+        file_name = (file_name + '-' + time.strftime("%Y%m%d-%H%M%S-") +
+                     generate_random_string(4))
+        if ext:
+            file_name += '.' + ext
+        file_name = os.path.join(directory, file_name)
+        if not os.path.exists(file_name):
+            break
+
+    return file_name
+print generate_tmp_file_name('hadong', 'txt')
