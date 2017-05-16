@@ -3003,3 +3003,27 @@ def kill_process_tree(pid, sig=signal.SIGKILL):
     safe_kill(pid, sig)
     safe_kill(pid, signal.SIGCONT)
 kill_process_tree(5739)
+=================================================
+import socket
+def is_port_free(port, address):
+    """
+    Return True if the given port is available for use.
+
+    :param port: Port number
+    """
+    try:
+        s = socket.socket()
+        if address == "localhost":
+            s.bind(("localhost", port))
+            free = True
+        else:
+            s.connect((address, port))
+            free = False
+    except socket.error:
+        if address == "localhost":
+            free = False
+        else:
+            free = True
+    s.close()
+    return free
+print is_port_free(81, '0.0.0.0')
