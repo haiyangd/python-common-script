@@ -2610,3 +2610,21 @@ print get_process_name(1252)
 "tmp3.py" 38L, 1123C written                                                                                                   
 [root@VM_255_119_centos python]# python tmp3.py 
 sshd
+##########################################
+[root@VM_255_119_centos python]# vim tmp4.py 
+
+def display_data_size(size):
+    '''
+    Display data size in human readable units.
+
+    :type size: int
+    :param size: Data size, in Bytes.
+    :return: Human readable string with data size.
+    '''
+    prefixes = ['B', 'kB', 'MB', 'GB', 'TB']
+    i = 0
+    while size > 1000.0:
+        size /= 1000.0
+        i += 1
+    return '%.2f %s' % (size, prefixes[i])
+print display_data_size(1024*1024*1024)
