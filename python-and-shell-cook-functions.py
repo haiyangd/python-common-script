@@ -3158,3 +3158,40 @@ def wait_for(func, timeout, first=0.0, step=1.0, text=None):
 
     return None
 print wait_for(time_sleep, 10)
+=========================================
+[root@VM_255_119_centos python]# cat tmp20.py 
+import socket
+def convert_ipv4_to_ipv6(ipv4):
+    """
+    Translates a passed in string of an ipv4 address to an ipv6 address.
+
+    :param ipv4: a string of an ipv4 address
+    """
+
+    converted_ip = "::ffff:"
+    split_ipaddress = ipv4.split('.')
+    try:
+        socket.inet_aton(ipv4)
+    except socket.error:
+        raise ValueError("ipv4 to be converted is invalid")
+    if (len(split_ipaddress) != 4):
+        raise ValueError("ipv4 address is not in dotted quad format")
+
+    for index, string in enumerate(split_ipaddress):
+        if index != 1:
+            test = str(hex(int(string)).split('x')[1])
+            if len(test) == 1:
+                final = "0"
+                final += test
+                test = final
+        else:
+            test = str(hex(int(string)).split('x')[1])
+            if len(test) == 1:
+                final = "0"
+                final += test + ":"
+                test = final
+            else:
+                test += ":"
+        converted_ip += test
+    return converted_ip
+print convert_ipv4_to_ipv6('192.168.1.1')
