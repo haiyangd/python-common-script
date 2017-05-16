@@ -2628,3 +2628,29 @@ def display_data_size(size):
         i += 1
     return '%.2f %s' % (size, prefixes[i])
 print display_data_size(1024*1024*1024)
+===================================================
+[root@VM_255_119_centos python]# vim tmp5.py 
+
+import re
+def convert_data_size(size, default_sufix='B'):
+    '''
+    Convert data size from human readable units to an int of arbitrary size.
+
+    :param size: Human readable data size representation (string).
+    :param default_sufix: Default sufix used to represent data.
+    :return: Int with data size in the appropriate order of magnitude.
+    '''
+    orders = {'B': 1,
+              'K': 1024,
+              'M': 1024 * 1024,
+              'G': 1024 * 1024 * 1024,
+              'T': 1024 * 1024 * 1024 * 1024,
+              }
+
+    order = re.findall("([BbKkMmGgTt])", size[-1])
+    if not order:
+        size += default_sufix
+        order = [default_sufix]
+
+    return int(float(size[0:-1]) * orders[order[0].upper()])
+print convert_data_size('1', default_sufix='K')
