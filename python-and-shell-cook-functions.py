@@ -2954,3 +2954,18 @@ def find_command(cmd):
 
     raise ValueError('Missing command: %s' % cmd)
 print find_command('ls')
+=====================================================
+[root@VM_255_119_centos python]# cat tmp14.py 
+import os
+def pid_exists(pid):
+    """
+    Return True if a given PID exists.
+
+    :param pid: Process ID number.
+    """
+    try:
+        os.kill(pid, 0)
+        return True
+    except Exception:
+        return False
+print pid_exists(21)
