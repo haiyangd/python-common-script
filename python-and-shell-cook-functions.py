@@ -2888,3 +2888,25 @@ a = lock_file('/data/haiyang/python/tmp12.py')
 print a.write('hahahah')
 time.sleep(120)
 print unlock_file(a)
+=====================================================
+[root@VM_255_119_centos python]# cat tmp12.py 
+def unique(llist):
+    """
+    Return a list of the elements in list, but without duplicates.
+
+    :param list: List with values.
+    :return: List with non duplicate elements.
+    """
+    n = len(llist)
+    if n == 0:
+        return []
+    u = {}
+    try:
+        for x in llist:
+            u[x] = 1
+    except TypeError:
+        return None
+    else:
+        return u.keys()
+a = ['1', '2', '3', '4', '3']
+print unique(a)
