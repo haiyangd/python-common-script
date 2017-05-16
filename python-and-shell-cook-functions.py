@@ -2910,3 +2910,47 @@ def unique(llist):
         return u.keys()
 a = ['1', '2', '3', '4', '3']
 print unique(a)
+=========================================
+[root@VM_255_119_centos python]# vim tmp13.py
+
+import os
+def unique(llist):
+    """
+    Return a list of the elements in list, but without duplicates.
+    :param list: List with values.
+    :return: List with non duplicate elements.
+    """
+    n = len(llist)
+    if n == 0:
+        return []
+    u = {}
+    try:
+        for x in llist:
+            u[x] = 1
+    except TypeError:
+        return None
+    else:
+        return u.keys()
+
+def find_command(cmd):
+    """
+    Try to find a command in the PATH, paranoid version.
+
+    :param cmd: Command to be found.
+    :raise: ValueError in case the command was not found.
+    """
+    common_bin_paths = ["/usr/libexec", "/usr/local/sbin", "/usr/local/bin",
+                        "/usr/sbin", "/usr/bin", "/sbin", "/bin"]
+    try:
+        path_paths = os.environ['PATH'].split(":")
+    except IndexError:
+        path_paths = []
+    path_paths = unique(common_bin_paths + path_paths)
+
+    for dir_path in path_paths:
+        cmd_path = os.path.join(dir_path, cmd)
+        if os.path.isfile(cmd_path):
+            return os.path.abspath(cmd_path)
+
+    raise ValueError('Missing command: %s' % cmd)
+print find_command('ls')
