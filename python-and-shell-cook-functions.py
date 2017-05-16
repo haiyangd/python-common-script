@@ -3122,3 +3122,39 @@ def generate_tmp_file_name(file_name, ext=None, directory='/tmp/'):
 
     return file_name
 print generate_tmp_file_name('hadong', 'txt')
+=========================
+[root@VM_255_119_centos python]# vim tmp18.py 
+
+import time
+def time_sleep():
+    time.sleep(1)
+    return True
+def wait_for(func, timeout, first=0.0, step=1.0, text=None):
+    """
+    If func() evaluates to True before timeout expires, return the
+    value of func(). Otherwise return None.
+
+    @brief: Wait until func() evaluates to True.
+
+    :param timeout: Timeout in seconds
+    :param first: Time to sleep before first attempt
+    :param steps: Time to sleep between attempts in seconds
+    :param text: Text to print while waiting, for debug purposes
+    """
+    start_time = time.time()
+    end_time = time.time() + timeout
+
+    time.sleep(first)
+
+    while time.time() < end_time:
+        if text:
+            logging.debug("%s (%f secs)", text, (time.time() - start_time))
+
+        output = func()
+        if output:
+            return output
+
+        time.sleep(step)
+
+    return None
+print wait_for(time_sleep, 10)
