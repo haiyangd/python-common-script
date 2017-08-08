@@ -357,3 +357,4 @@ number = 10
 ###63.   wait_for_remote_service.py 在超时时间之前看机器是否可达
 ###64.   port_forwarding.py 代理用于端口转发
 ###65.   ping_remote_host.py 自写的ping代码工具，用于ping远端服务器是否可达
+###66.  simple_http_server.py 简易的http server
