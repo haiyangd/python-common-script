@@ -354,3 +354,4 @@ number = 10
 ###60.   countFile.py 对目录下所有文件计数
 ###61.   local_machine_info.py 用socket模块获取机器名和机器的ip
 ###62.   remote_machine_info.py 用socket模块根据别的机器名获取别的机器的ip
+###63.   wait_for_remote_service.py 在超时时间之前看机器是否可达
