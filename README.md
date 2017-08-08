@@ -358,3 +358,4 @@ number = 10
 ###64.   port_forwarding.py 代理用于端口转发
 ###65.   ping_remote_host.py 自写的ping代码工具，用于ping远端服务器是否可达
 ###66.  simple_http_server.py 简易的http server
+###67.  checking_webpage_with_HEAD_request.py 核实网页的状态
