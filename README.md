@@ -352,3 +352,5 @@ number = 10
 
 ###59.   find_file.py 查找特定目录下的文件
 ###60.   countFile.py 对目录下所有文件计数
+###61.   local_machine_info.py 用socket模块获取机器名和机器的ip
+###62.   remote_machine_info.py 用socket模块根据别的机器名获取别的机器的ip
