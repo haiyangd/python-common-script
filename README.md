@@ -360,3 +360,4 @@ number = 10
 ###66.  simple_http_server.py 简易的http server
 ###67.  checking_webpage_with_HEAD_request.py 核实网页的状态
 ###68.  xmlrpc_server_with_http_auth.py 简易的xmlrpc server xmlrpc_client.py 简易的xmlrpc 客户端
+###69.  healthcheck.py 探测list.txt列表机器的状态
