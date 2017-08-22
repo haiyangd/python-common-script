@@ -362,3 +362,4 @@ number = 10
 ###68.  xmlrpc_server_with_http_auth.py 简易的xmlrpc server xmlrpc_client.py 简易的xmlrpc 客户端
 ###69.  healthcheck.py 探测list.txt列表机器的状态
 ###70.  unidecode：Unicode 文本的 ASCII 转换形式 。官网https://pypi.python.org/pypi/Unidecode
+###71.  IO编程.py os常用模块
