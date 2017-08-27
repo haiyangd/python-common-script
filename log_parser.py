@@ -1,8 +1,12 @@
 from datetime import datetime
 import re
-
+from sys import argv, exit
+"USAGE: %s logname expect_string"
 
 CURRENT_YEAR = datetime.now().year
+if len(argv) != 3:
+    print __doc__ , argv[0]
+    exit(0)
 
 
 class Parser(object):
@@ -40,9 +44,11 @@ class LogParser(Parser):
             return False
         else:
             return True
-
-parser = LogParser(file_path='tvsadm.log', regexp='Getsockopt')
+#print argv[2]
+parser = LogParser(file_path=argv[1], regexp=argv[2])
 while True:
     for line in parser.parse():
         print line
+        if argv[2] in line:
+           exit (0)
 #parser.parse()
