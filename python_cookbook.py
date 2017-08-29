@@ -7,6 +7,7 @@ import time
 from ConfigParser import ConfigParser
 from logging.handlers import TimedRotatingFileHandler
 
+#开启log 模块
 LOG_FILE = "./logs/output.log"
 
 logger = logging.getLogger()
@@ -19,6 +20,7 @@ fh.setFormatter(formatter)
 fh.suffix = "%Y%m%d%H%M"
 logger.addHandler(fh)
 
+#获取url的code状态
 def getUrlcode(url):
     try:
         start = time.time()
@@ -30,6 +32,7 @@ def getUrlcode(url):
         msg = 'open url error ,reason is:' + str(e.reason) 
         logging.info(msg)
 
+#读取config.ini的用法    
 def get(field, key):
     result = ""
     try:
@@ -83,3 +86,15 @@ def IsOpen(ip,port):
         return False
 if __name__ == '__main__':
     IsOpen('127.0.0.1',800) '''
+
+#config.ini
+[MonitorProgram] 
+StartPath: C:/tomcat/bin/startup.bat
+CATALINA_HOME: C:\\tomcat\\
+JAVA_HOME: C:\\Program Files\\Java\\jdk1.8.0_31
+ 
+[MonitorProcessName] 
+ProcessName: tomcat_8080
+
+[MonitorUrl] 
+Url: http://127.0.0.1:8080
