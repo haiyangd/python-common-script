@@ -254,4 +254,42 @@ python中的很多模块是非常牛X的，之前提到过logging模块(其功�
  根据在网上看到信息，该模块在多进程环境下使用可能会出现Windows Error 32 报错的情况，这需要重写下 doRollover 函数。
 
  另外涉及到logging模块的配置部分，我们还可以通过指定一个配置文件－－－使用logging.config.fileConfig('logging.conf')方法，读取该自定义配置的方法生效，具体可以参看官方相关文档。
+ 
+################################################################################
+# md5sum 功能
+root@VM-255-210-ubuntu:/data/haiyang/python# cat md5sum.py 
+#!/usr/bin/python
+#encoding=utf-8
+import io
+import sys
+import hashlib
+import string
+
+def printUsage():
+	print ('''Usage: [python] pymd5sum.py <filename>''')
+	
+def md5sum_check():
+	if(sys.argv.__len__()==2):
+		#print(sys.argv[1])
+
+		m = hashlib.md5()
+		file = io.FileIO(sys.argv[1],'r')
+		bytes = file.read(1024)
+		while(bytes != b''):
+			m.update(bytes)
+			bytes = file.read(1024) 
+		file.close()
+		
+		#md5value = ""
+		md5value = m.hexdigest()
+		print(md5value+"\t"+sys.argv[1])
+		
+		#dest = io.FileIO(sys.argv[1]+".CHECKSUM.md5",'w')
+		#dest.write(md5value)
+		#dest.close()
+	
+	else:
+		printUsage() 
+md5sum_check()
+
 
